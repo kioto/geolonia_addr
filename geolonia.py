@@ -10,6 +10,7 @@ from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Float
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
 
 DBFILE = 'geolonia_addr_db.sqlite3'
 DBNAME = 'sqlite:///' + DBFILE
@@ -58,6 +59,22 @@ class Geolonia(object):
         self._base.metadata.bind = self._engine
         self._base.metadata.create_all()
         self.session = sessionmaker(bind=self._engine)
+
+    def find_long_lat(self, pref, city, area):
+        ses = self.session()
+        lng = 0.0
+        lat = 0.0
+        try:
+            addr = ses.query(Address).filter_by(PrefName=pref,
+                                                CityName=city,
+                                                AreaName=area).one()
+            lng = addr.Longitude
+            lat = addr.Latitude
+
+        except NoResultFound:
+            pass
+
+        return lng, lat
 
 
 if __name__ == '__main__':
