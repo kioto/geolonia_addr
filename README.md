@@ -11,7 +11,7 @@ Geolonia住所データのDB化とアクセスを提供するモジュール
 Geolonia 住所データ
 https://geolonia.github.io/japanese-addresses/
 
-データの入手は、以下のスクリプトを実行する。
+以下のスクリプトを実行し、データを入手する。
 
 ```
 wget https://raw.githubusercontent.com/geolonia/japanese-addresses/master/data/latest.csv
